@@ -11,3 +11,11 @@ SQL_DB_URL = "postgresql://{}:{}@{}/{}".format(DB_USER,DB_PASSWORD, "Localhost",
 engine = create_engine(SQL_DB_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+
+    finally:
+         db.close()
